@@ -75,9 +75,9 @@ json
 Copy
 Edit
 {
-"firstName": "Nour",
-"lastName": "Ben Ali",
-"email": "nour.benali@example.com"
+"firstName": "khalil",
+"lastName": "ayari",
+"email": "ayari2014khalil@example.com"
 }
 📦 Lancer l'application
 Cloner le projet :
