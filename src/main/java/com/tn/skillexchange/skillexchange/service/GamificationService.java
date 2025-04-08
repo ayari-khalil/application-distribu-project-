@@ -40,13 +40,15 @@ public class GamificationService {
         UserProgress progress = userProgressRepository.findByUserId(userId)
                 .orElse(new UserProgress(userId, 0, 0));
 
-        // Ajout des points
+
         int previousLevel = progress.getLevel();
         progress.addPoints(points);
+        System.out.println("📌 progress = " + progress);
         userProgressRepository.save(progress);
 
         // Historique des points
         PointHistory history = new PointHistory(userId, points, reason, LocalDateTime.now());
+        System.out.println("📌 point history = " + history);
         pointHistoryRepository.save(history);
 
         // Vérifier si un nouveau badge doit être attribué
@@ -93,6 +95,22 @@ public class GamificationService {
     }
     public User addUser(User user) {
         return userRepository.save(user);
+    }
+
+    public void autoAssignBadge(Long userId) {
+        UserProgress progress = getProgressByUser(userId);
+        if (progress.getPoints() >= 1000 && !hasBadge(userId, "Badge 1000 points")) {
+            assignBadge(userId, "Badge 1000 points", "Atteint 1000 points !");
+        }
+    }
+
+    private boolean hasBadge(Long userId, String title) {
+        return badgeRepository.existsByUserIdAndTitle(userId, title);
+    }
+
+
+    public List<UserProgress> getLeaderboard() {
+        return userProgressRepository.findAllByOrderByPointsDesc();
     }
 
 }

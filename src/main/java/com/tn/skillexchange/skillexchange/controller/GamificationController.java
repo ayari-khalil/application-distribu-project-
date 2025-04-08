@@ -29,10 +29,13 @@ public class GamificationController {
         return "Badge attribué avec succès et email envoyé !";
     }
 
+
+
     // ➕ Ajouter des points
     @PostMapping("/points")
     public ResponseEntity<String> addPoints(@RequestBody PointHistory request) {
         gamificationService.addPointsToUser(request.getUserId(), request.getPointsEarned(), request.getReason());
+        gamificationService.autoAssignBadge(request.getUserId());
         return ResponseEntity.ok("Points ajoutés avec succès !");
     }
 
@@ -70,4 +73,13 @@ public class GamificationController {
         User savedUser = gamificationService.addUser(user); // Ajoute une méthode addUser dans le service
         return ResponseEntity.ok(savedUser);
     }
+
+    @GetMapping("/leaderboard")
+    public ResponseEntity<List<UserProgress>> getLeaderboard() {
+        List<UserProgress> leaderboard = gamificationService.getLeaderboard();
+        return ResponseEntity.ok(leaderboard);
+    }
+
+
+
 }
