@@ -2,10 +2,12 @@ package com.tn.skillexchange.skillexchange.service;
 
 import com.tn.skillexchange.skillexchange.entity.Badge;
 import com.tn.skillexchange.skillexchange.entity.PointHistory;
+import com.tn.skillexchange.skillexchange.entity.User;
 import com.tn.skillexchange.skillexchange.entity.UserProgress;
 import com.tn.skillexchange.skillexchange.repository.BadgeRepository;
 import com.tn.skillexchange.skillexchange.repository.PointHistoryRepository;
 import com.tn.skillexchange.skillexchange.repository.UserProgressRepository;
+import com.tn.skillexchange.skillexchange.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -17,14 +19,20 @@ public class GamificationService {
     private final UserProgressRepository userProgressRepository;
     private final PointHistoryRepository pointHistoryRepository;
     private final BadgeRepository badgeRepository;
+    private final UserRepository userRepository;
+    private final EmailService emailService;
 
-    // Constructeur manuel pour l'injection des dépendances
+    // ✅ Seul constructeur à conserver
     public GamificationService(UserProgressRepository userProgressRepository,
                                PointHistoryRepository pointHistoryRepository,
-                               BadgeRepository badgeRepository) {
+                               BadgeRepository badgeRepository,
+                               UserRepository userRepository,
+                               EmailService emailService) {
         this.userProgressRepository = userProgressRepository;
         this.pointHistoryRepository = pointHistoryRepository;
         this.badgeRepository = badgeRepository;
+        this.userRepository = userRepository;
+        this.emailService = emailService;
     }
 
     public void addPointsToUser(Long userId, int points, String reason) {
@@ -48,8 +56,20 @@ public class GamificationService {
     }
 
     public void assignBadge(Long userId, String title, String description) {
+        System.out.println("📌 assignBadge lancé pour userId = " + userId);
+
         Badge badge = new Badge(userId, title, description, LocalDateTime.now());
         badgeRepository.save(badge);
+        System.out.println("✅ Badge sauvegardé : " + badge.getTitle());
+
+        userRepository.findById(userId).ifPresentOrElse(user -> {
+            System.out.println("🔍 Utilisateur trouvé : " + user.getEmail());
+            if (user.getEmail() != null) {
+                emailService.sendBadgeEmail(user.getEmail(), title, description);
+            } else {
+                System.out.println("⚠️ L'utilisateur n'a pas d'adresse email !");
+            }
+        }, () -> System.out.println("❌ Aucun utilisateur trouvé avec l'id " + userId));
     }
 
     public List<Badge> getBadgesByUser(Long userId) {
@@ -63,4 +83,16 @@ public class GamificationService {
     public UserProgress getProgressByUser(Long userId) {
         return userProgressRepository.findByUserId(userId).orElse(null);
     }
+
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+    public List<Badge> getAllBadges() {
+        return badgeRepository.findAll();
+    }
+    public User addUser(User user) {
+        return userRepository.save(user);
+    }
+
 }
