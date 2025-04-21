@@ -1,0 +1,77 @@
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary-color: #3f51b5;
+  --accent-color: #ff4081;
+  --background-color: #f5f5f5;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card {
+  @apply bg-white rounded-lg shadow-md p-6 mb-4;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  @apply transform scale-105 shadow-xl;
+}
+
+.badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
+  transition: transform 0.3s ease;
+}
+
+.badge:hover {
+  @apply transform scale-110;
+}
+
+.badge-gold {
+  @apply bg-yellow-100 text-yellow-800;
+}
+
+.badge-silver {
+  @apply bg-gray-100 text-gray-800;
+}
+
+.badge-bronze {
+  @apply bg-orange-100 text-orange-800;
+}
+
+.mat-sidenav-container {
+  background-color: var(--background-color);
+}
+
+.mat-sidenav {
+  background-color: var(--primary-color);
+}
+
+.mat-toolbar {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.mat-button {
+  text-transform: none;
+}
+
+.mat-button:hover {
+  background-color: var(--accent-color);
+}
+
+.text-primary {
+  color: var(--primary-color);
+}
