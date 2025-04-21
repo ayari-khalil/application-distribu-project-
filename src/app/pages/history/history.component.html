@@ -1,0 +1,20 @@
+<div class="space-y-4">
+    <mat-card *ngFor="let activity of activities" class="activity-card">
+      <div class="flex items-center">
+        <!-- Activity Icon -->
+        <mat-icon [class]="'mr-4 ' + activity.iconColor" class="text-3xl">{{ activity.icon }}</mat-icon>
+        <div class="flex-1">
+          <!-- Activity Title & Description -->
+          <h3 class="font-semibold text-lg">{{ activity.title }}</h3>
+          <p class="text-sm text-gray-600">{{ activity.description }}</p>
+        </div>
+        <!-- Points and Date -->
+        <div class="text-right">
+          <div [class]="'text-lg font-bold ' + activity.pointsColor">
+            {{ activity.points > 0 ? '+' : '' }}{{ activity.points }}
+          </div>
+          <div class="text-sm text-gray-500">{{ activity.date }}</div>
+        </div>
+      </div>
+    </mat-card>
+  </div>
