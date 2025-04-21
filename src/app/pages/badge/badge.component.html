@@ -11,7 +11,7 @@
         </div>
         
         <mat-card-header>
-          <mat-card-title>{{ badge.name }}</mat-card-title>
+          <mat-card-title>{{ badge.title }}</mat-card-title>
           <mat-icon class="status-icon" [ngClass]="{'earned': badge.earned}">
             {{ badge.earned ? 'check_circle' : 'radio_button_unchecked' }}
           </mat-icon>
@@ -24,7 +24,7 @@
 
         <mat-card-actions>
           <button mat-flat-button class="claim-button" *ngIf="!badge.earned">Claim Badge</button>
-          <span class="earned-date" *ngIf="badge.earned">Earned on {{ badge.earnedDate }}</span>
+          <span class="earned-date" *ngIf="badge.earned">Earned on {{ badge.dateAwarded }}</span>
         </mat-card-actions>
       </mat-card>
     </div>

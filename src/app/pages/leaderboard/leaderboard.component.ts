@@ -1,20 +1,27 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+import { GamificationService, UserProgress } from '../../services/gamification.service';
 
 @Component({
   selector: 'app-leaderboard',
   imports: [CommonModule, MatTableModule, MatCardModule],
   templateUrl: './leaderboard.component.html',
-  styleUrl: './leaderboard.component.css'
-})
-export class LeaderboardComponent {
-  displayedColumns: string[] = ['position', 'name', 'points', 'badges'];
-  users = [
-    { position: 1, name: 'John Doe', points: 3200, badges: 15 },
-    { position: 2, name: 'Jane Smith', points: 2900, badges: 12 },
-    { position: 3, name: 'Mike Johnson', points: 2750, badges: 11 }
-  ];
+  styleUrl: './leaderboard.component.css',
+  standalone: true,
 
+})
+export class LeaderboardComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'userId', 'points', 'Level'];
+  users: UserProgress[] = [];
+
+  constructor(private gamificationService: GamificationService) {}
+
+  ngOnInit(): void {
+    this.gamificationService.getLeaderboard().subscribe(data => {
+      this.users = data;
+      console.log('Leaderboard data:', this.users);
+    });
+  }
 }

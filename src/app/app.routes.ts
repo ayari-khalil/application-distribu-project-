@@ -13,8 +13,8 @@ export const routes: Routes = [
   },
   {
     path: 'badges',
-    loadComponent: () => import('./pages/badges/badges.component')
-      .then(m => m.BadgesComponent)
+    loadComponent: () => import('./pages/badge/badge.component')
+      .then(m => m.BadgeComponent)
   },
   {
     path: 'leaderboard',

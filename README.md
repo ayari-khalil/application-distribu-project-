@@ -1,98 +1,95 @@
-SkillExchange - Microservice Gamification
-Ce microservice fait partie du projet SkillExchange, une plateforme d’échange de compétences. Il est dédié à la gamification : attribution de badges, suivi de points, progression et classement des utilisateurs.
 
-🚀 Fonctionnalités
-✅ Attribution automatique de points suite à des actions
+# 🎮 SkillExchange Frontend
 
-🏅 Attribution manuelle ou automatique de badges
+Ce dépôt contient le **frontend Angular** de l'application **SkillExchange**, une plateforme de gamification des compétences permettant aux utilisateurs d’échanger des savoirs, de gagner des badges, de suivre leur progression et de consulter leur historique d’activités.
 
-📈 Suivi de la progression utilisateur (points + niveaux)
+---
 
-📜 Historique des points obtenus
+## 🚀 Démarrage
 
-🧾 Liste des badges obtenus
+### Installation
 
-🧑‍🤝‍🧑 Gestion des utilisateurs (ajout, listing)
+```bash
+npm install
+```
 
-🏆 Leaderboard (classement des utilisateurs)
+### Lancer le serveur de développement
 
-📬 Envoi d’e-mails lors de l’attribution d’un badge
+```bash
+ng serve
+```
 
-🧱 Technologies utilisées
-Java 17
+> Le proxy est géré via `proxy.conf.json` pour rediriger les appels API vers le backend.
 
-Spring Boot
+---
 
-Spring Data JPA
+## 📁 Structure Principale des Composants
 
-H2 / MySQL (selon le profil)
+### 1. 🏆 **Gamification / Leaderboard**
+- **Composant :** `leaderboard.component.ts`
+- **Fonction :** Affiche les meilleurs utilisateurs selon leurs points et niveaux.
+- **Données :**
+  ```json
+  [
+    { "id": 3, "userId": 3, "points": 720, "level": 7 },
+    { "id": 2, "userId": 2, "points": 420, "level": 4 },
+    { "id": 1, "userId": 1, "points": 140, "level": 1 }
+  ]
+  ```
+- **UI :** Utilisation de `mat-table` avec colonnes dynamiques.
 
-Eureka Client (discovery)
+---
 
-API Gateway
+### 2. 🥇 **Badges Utilisateur**
+- **Composant :** `badge.component.ts`
+- **Fonction :** Affiche la liste des badges gagnés par l’utilisateur.
+- **Données dynamiques :** récupérées depuis l’API backend (`getBadges()`).
+- **Exemple de données :**
+  ```json
+  [
+    { "id": 1, "userId": 1, "title": "Niveau 1", "description": "Atteint le niveau 1", "dateAwarded": "2025-04-21T22:46:33.372156" }
+  ]
+  ```
+- **Affichage avec icons statiques :** `emoji_events`, `school`, `swap_horiz`, etc.
+- **Types personnalisés :** bronze, silver, gold
 
-Lombok
+---
 
-Swagger (optionnel pour tester les endpoints)
+### 3. 📜 **Historique d'activités**
+- **Composant :** `history.component.ts`
+- **Fonction :** Affiche les événements passés liés à l’activité de l’utilisateur.
+- **Design :** Interface élégante, moderne, **sans Tailwind CSS**, 100% en CSS pur.
+- **UI inclut :**
+  - Icône (Material Icon)
+  - Titre
+  - Description
+  - Points (+/-)
+  - Date
 
-Postman (pour les tests API)
+---
 
-📁 Structure du projet
-bash
-Copy
-Edit
-📦 skillexchange-gamification
-┣ 📂 controller
-┃ ┗ GamificationController.java
-┣ 📂 service
-┃ ┗ GamificationService.java
-┣ 📂 entity
-┃ ┣ Badge.java
-┃ ┣ PointHistory.java
-┃ ┣ UserProgress.java
-┃ ┗ User.java
-┣ 📂 repository
-┃ ┣ BadgeRepository.java
-┃ ┣ PointHistoryRepository.java
-┃ ┣ UserProgressRepository.java
-┃ ┗ UserRepository.java
-┗ application.yml
-🔗 Endpoints principaux
-Méthode	URL	Description
-POST	/api/gamification/points	Ajouter des points à un utilisateur
-POST	/api/gamification/assign-badge	Attribuer un badge manuellement
-GET	/api/gamification/badges/{userId}	Lister les badges d’un utilisateur
-GET	/api/gamification/progress/{userId}	Voir la progression d’un utilisateur
-GET	/api/gamification/history/{userId}	Voir l’historique des points
-POST	/api/gamification	Ajouter un nouvel utilisateur
-GET	/api/gamification/leaderboard	Voir le classement global
-🧪 Exemple de requête Postman (ajout d’un utilisateur)
-URL : POST /api/gamification
+## 🎨 Stack et Technologies
 
-Body (JSON) :
+- Angular 17+
+- Angular Material
+- TypeScript
+- CSS pur (sans Tailwind)
+- Responsive Design
 
-json
-Copy
-Edit
-{
-"firstName": "khalil",
-"lastName": "ayari",
-"email": "ayari2014khalil@example.com"
-}
-📦 Lancer l'application
-Cloner le projet :
+---
 
-bash
-Copy
-Edit
-git clone https://github.com/ton-utilisateur/skillexchange-gamification.git
-Ouvrir dans IntelliJ ou VS Code
+## 📦 Build
 
-Lancer le microservice avec GamificationApplication.java
+```bash
+ng build
+```
 
-⚠️ Assure-toi que :
+Les fichiers finaux seront générés dans le dossier `dist/`.
 
-Le serveur Eureka est lancé
+---
 
-Le Gateway est opérationnel
+## 🧠 Développé avec ❤️ par l’équipe SkillExchange
 
+- Gamification intégrée (points, niveaux, badges)
+- Affichage dynamique des données
+- Expérience utilisateur soignée

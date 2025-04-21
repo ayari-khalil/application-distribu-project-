@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,7 @@ import { CommonModule } from '@angular/common';
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
-    MatIconModule
+    MatIconModule,
   ],
   template: `
     <div class="app-container">
