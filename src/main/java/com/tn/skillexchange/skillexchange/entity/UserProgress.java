@@ -73,4 +73,6 @@ public class UserProgress {
                 ", level=" + level +
                 '}';
     }
+
+
 }
