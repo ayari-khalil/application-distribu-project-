@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AddLevelComponent } from './pages/add-level/add-level.component';
 
 export const routes: Routes = [
   {
@@ -25,5 +26,10 @@ export const routes: Routes = [
     path: 'history',
     loadComponent: () => import('./pages/history/history.component')
       .then(m => m.HistoryComponent)
+  },
+  
+  {
+    path: 'add-level/:id',
+    loadComponent: () => import('./pages/add-level/add-level.component').then(m => m.AddLevelComponent)
   }
 ];

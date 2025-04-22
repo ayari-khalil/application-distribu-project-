@@ -1,9 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js';
+import { User } from '../../services/user.service';
+import { Router } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,7 +14,26 @@ import { ChartConfiguration } from 'chart.js';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit{
+
+
+  users: User[] = [];
+
+  constructor(private router: Router, private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.userService.getAllUsers().subscribe({
+      next: (data) => this.users = data,
+      error: (err) => console.error('Erreur lors du chargement des utilisateurs', err)
+    });
+    console.log(this.users);
+  }
+
+  navigateToLevelForm(userId: number) {
+    this.router.navigate(['/add-level', userId]); // redirige vers /add-level/3, etc.
+  }
+
+
     lineChartData: ChartConfiguration['data'] = {
       datasets: [
         {

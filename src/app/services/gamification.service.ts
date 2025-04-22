@@ -10,6 +10,11 @@ export interface UserProgress {
   points: number;
   badges: number;
 }
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+}
 
 @Injectable({
   providedIn: 'root'

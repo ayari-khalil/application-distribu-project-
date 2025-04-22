@@ -107,4 +107,32 @@
         </div>
       </mat-card-content>
     </mat-card>
+    <mat-card class="users-card">
+      <mat-card-header>
+        <mat-card-title>Utilisateurs</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.id }}</td>
+              <td>{{ user.email }}</td>
+              <td>
+                <button mat-raised-button color="primary" (click)="navigateToLevelForm(user.id)">
+                  Ajouter un niveau
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </mat-card-content>
+    </mat-card>
+    
   </div>
